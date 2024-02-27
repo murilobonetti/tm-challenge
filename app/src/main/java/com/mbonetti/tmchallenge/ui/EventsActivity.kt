@@ -1,4 +1,4 @@
-package com.mbonetti.tmchallenge
+package com.mbonetti.tmchallenge.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
