@@ -1,4 +1,4 @@
-package com.mbonetti.tmchallenge.models
+package com.mbonetti.tmchallenge.db.models
 
 data class StartDate(
     val dateTBA: Boolean,
