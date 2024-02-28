@@ -29,6 +29,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             buildConfigField "String", "BASE_URL", '"https://app.ticketmaster.com/discovery/v2/"'
+            buildConfigField "String", "API_KEY", '"DW0E98NrxUIfDDtNN7ijruVSm60ryFLX"'
         }
     }
 
