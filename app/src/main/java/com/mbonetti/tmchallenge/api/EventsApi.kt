@@ -13,7 +13,23 @@ interface EventsApi {
         @Query("page") pageNumber: Int = 0,
         @Query("keyword") searchKeyword: String? = null,
         @Query("city") city: String? = null,
+        @Query("size") pageSize: Int = 10
     ): Response<EventsResponse>
 
+    @GET("events.json")
+    suspend fun getEventsByKeyword(
+        @Query("apikey") apiKey: String = BuildConfig.API_KEY,
+        @Query("page") pageNumber: Int = 0,
+        @Query("keyword") searchKeyword: String? = null,
+        @Query("size") pageSize: Int = 10
+    ): Response<EventsResponse>
+
+    @GET("events.json")
+    suspend fun getEventsByCity(
+        @Query("apikey") apiKey: String = BuildConfig.API_KEY,
+        @Query("page") pageNumber: Int = 0,
+        @Query("city") city: String? = null,
+        @Query("size") pageSize: Int = 10
+    ): Response<EventsResponse>
 
 }
