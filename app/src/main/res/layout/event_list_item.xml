@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/_16sdp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/event_image"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_90sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@drawable/ic_launcher_background"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/event_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_4sdp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/event_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/event_image"
+        app:layout_constraintTop_toTopOf="@+id/event_image"
+        tools:text="Phoenix Suns vs. Oklahoma City Thunder" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/event_notice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_4sdp"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/event_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/event_image"
+        app:layout_constraintTop_toBottomOf="@id/event_name"
+        tools:text="All Prices Include Applicable NC Sales Taxes For luxury seating options (including Suites/Royal Boxes/Terrace Tables), please call 704-HORNETS." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
