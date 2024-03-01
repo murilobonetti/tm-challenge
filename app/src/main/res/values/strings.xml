@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">tm-challenge</string>
-    <string name="search">Search...</string>
+    <string name="search">Search…</string>
     <string name="search_by_city">Search by City</string>
+    <string name="know_more">Tap to know more about the event</string>
 </resources>

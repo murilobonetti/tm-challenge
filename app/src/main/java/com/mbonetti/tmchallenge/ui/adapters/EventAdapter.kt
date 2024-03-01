@@ -51,7 +51,6 @@ class EventAdapter : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
         holder.bind(
             imageUrl = event.images[0].url,
             eventName = event.name,
-//            notice = event.pleaseNote
         )
 
         holder.itemView.setOnClickListener {
@@ -64,6 +63,5 @@ class EventAdapter : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
     fun setOnItemClickListener(listener: (Event) -> Unit) {
         onItemClickListener = listener
     }
-
 
 }
