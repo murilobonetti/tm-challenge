@@ -58,7 +58,7 @@ class EventViewModel(
             )
         }
 
-        events.postValue(handleEventsResponse(response))
+        events.postValue(handleSearchResponse(response))
     }
 
     private fun handleEventsResponse(response: Response<EventsResponse>): Resource<EventsResponse> {
@@ -76,6 +76,16 @@ class EventViewModel(
                 }
                 resultResponse.embedded?.events?.let { saveEvents(it) }
                 return Resource.Success(eventsResponse ?: resultResponse)
+            }
+        }
+
+        return Resource.Error(response.message())
+    }
+
+    private fun handleSearchResponse(response: Response<EventsResponse>): Resource<EventsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { eventResponse ->
+                return Resource.Success(eventResponse)
             }
         }
 

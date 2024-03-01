@@ -85,7 +85,8 @@ class EventsActivity : AppCompatActivity() {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Toast.makeText(this, "An error occurred: $message", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "An error occurred: $message", Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
 
@@ -138,7 +139,11 @@ class EventsActivity : AppCompatActivity() {
                     && isScrolling
 
             if (shouldPaginate) {
-                viewModel.getEvents()
+                if (binding.search.text.isEmpty()) {
+                    viewModel.getEvents()
+                } else {
+                    viewModel.searchEventsByKeywordOrCity(binding.search.text.toString())
+                }
                 isScrolling = false
             }
         }
