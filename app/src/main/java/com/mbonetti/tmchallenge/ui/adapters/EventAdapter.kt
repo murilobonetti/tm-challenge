@@ -54,10 +54,8 @@ class EventAdapter : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 //            notice = event.pleaseNote
         )
 
-        holder.itemView.apply {
-            setOnItemClickListener {
-                onItemClickListener?.let { listener -> listener(event) }
-            }
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let { listener -> listener(event) }
         }
     }
 
