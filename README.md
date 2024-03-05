@@ -23,7 +23,7 @@ This app is capable of listing all events provided my Ticketmaster's Discovery A
 ### How to run 
 1. Clone the project from this repository
 2. Open the project on your android studio
-3. Put your *API_KEY* value on build.gradle 
+3. Put your *API_KEY* value on app module's build.gradle
 4. Make sure your gradle and kotlin version are up-to-date and sync the project
 5. Run the project on an emulator or virtual device.
 
