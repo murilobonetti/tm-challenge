@@ -26,8 +26,10 @@ class EventViewModel(
 
     val events: MutableLiveData<Resource<EventsResponse>> = MutableLiveData()
     var eventsPage = 0
+    var searchPage = 0
 
     private var eventsResponse: EventsResponse? = null
+    private var searchResponse: EventsResponse? = null
 
     private val _isSearchByCityChecked = MutableLiveData<Boolean>()
     val isSearchByCityChecked: LiveData<Boolean> get() = _isSearchByCityChecked
@@ -49,12 +51,12 @@ class EventViewModel(
         val response = if (isSearchByCityChecked.value == true) {
             eventRepository.getEventsByCity(
                 city = searchQuery,
-                pageNumber = eventsPage
+                pageNumber = searchPage
             )
         } else {
             eventRepository.getEventsByKeyword(
                 keyword = searchQuery,
-                pageNumber = eventsPage
+                pageNumber = searchPage
             )
         }
 
@@ -85,7 +87,18 @@ class EventViewModel(
     private fun handleSearchResponse(response: Response<EventsResponse>): Resource<EventsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { eventResponse ->
-                return Resource.Success(eventResponse)
+                searchPage++
+                if (searchResponse == null) {
+                    searchResponse = eventResponse
+                } else {
+                    val oldEvents = searchResponse?.embedded?.events
+                    val newEvents = eventResponse.embedded?.events
+                    if (newEvents != null) {
+                        oldEvents?.addAll(newEvents)
+                    }
+                }
+                eventResponse.embedded?.events?.let { saveEvents(it) }
+                return Resource.Success(searchResponse ?: eventResponse)
             }
         }
 
