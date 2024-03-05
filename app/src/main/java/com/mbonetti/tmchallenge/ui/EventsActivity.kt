@@ -44,21 +44,7 @@ class EventsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelProviderFactory)[EventViewModel::class.java]
 
         setupRecyclerView()
-
-        var job: Job? = null
-        binding.search.addTextChangedListener { editable ->
-            job?.cancel()
-            job = MainScope().launch {
-                delay(SEARCH_DELAY)
-                editable?.let {
-                    if (editable.toString().isEmpty()) {
-                        viewModel.getEvents()
-                    } else {
-                        viewModel.searchEventsByKeywordOrCity(editable.toString())
-                    }
-                }
-            }
-        }
+        setupSearch()
 
         viewModel.isSearchByCityChecked.observe(this) { isSearchByCityChecked ->
             binding.checkBox.isChecked = isSearchByCityChecked
@@ -75,7 +61,12 @@ class EventsActivity : AppCompatActivity() {
                     response.data?.let { eventsResponse ->
                         eventAdapter.differ.submitList(eventsResponse.embedded?.events?.toList())
                         val totalPages = eventsResponse.page?.totalPages?.div(QUERY_PAGE_SIZE + 2)
-                        isLastPage = viewModel.eventsPage == totalPages
+                        isLastPage = if (viewModel.searchPage > 0) {
+                            viewModel.searchPage == totalPages
+                        } else {
+                            viewModel.eventsPage == totalPages
+                        }
+
                         if (isLastPage) {
                             binding.rvEvents.setPadding(0, 0, 0, 0)
                         }
@@ -99,6 +90,25 @@ class EventsActivity : AppCompatActivity() {
         eventAdapter.setOnItemClickListener { event ->
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(event.url))
             startActivity(intent)
+        }
+    }
+
+    private fun setupSearch() {
+        var job: Job? = null
+        binding.search.addTextChangedListener { editable ->
+            job?.cancel()
+            job = MainScope().launch {
+                delay(SEARCH_DELAY)
+                editable?.let {
+                    if (editable.toString().isEmpty()) {
+                        viewModel.searchPage = 0
+                        viewModel.getEvents()
+                    } else {
+                        viewModel.eventsPage = 0
+                        viewModel.searchEventsByKeywordOrCity(editable.toString())
+                    }
+                }
+            }
         }
     }
 
@@ -140,8 +150,10 @@ class EventsActivity : AppCompatActivity() {
 
             if (shouldPaginate) {
                 if (binding.search.text.isEmpty()) {
+                    viewModel.searchPage = 0
                     viewModel.getEvents()
                 } else {
+                    viewModel.eventsPage = 0
                     viewModel.searchEventsByKeywordOrCity(binding.search.text.toString())
                 }
                 isScrolling = false

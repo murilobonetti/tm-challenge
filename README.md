@@ -28,10 +28,6 @@ This app is capable of listing all events provided my Ticketmaster's Discovery A
 5. Run the project on an emulator or virtual device.
 
 ### Known issues
-- [ ] The app does not paginate when it has search parameters set (working on it)
+- [x] The app does not paginate when it has search parameters set 
 - [ ] The app is not using Dependency Injection (will implement it after fixing pagination with search)
 - [ ] The app does not get saved events from database in case of network error yet (will implement it after fixing pagination with search)
-- [x] Remove API_KEY from remote
-
-
-  
