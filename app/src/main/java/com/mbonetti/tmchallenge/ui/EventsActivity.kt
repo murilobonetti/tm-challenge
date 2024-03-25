@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mbonetti.tmchallenge.databinding.ActivityEventsBinding
-import com.mbonetti.tmchallenge.db.EventDatabase
 import com.mbonetti.tmchallenge.repository.EventRepository
 import com.mbonetti.tmchallenge.ui.adapters.EventAdapter
 import com.mbonetti.tmchallenge.util.Constants.Companion.QUERY_PAGE_SIZE
@@ -22,6 +21,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class EventsActivity : AppCompatActivity() {
 
@@ -30,6 +30,10 @@ class EventsActivity : AppCompatActivity() {
     var isScrolling = false
 
     lateinit var viewModel: EventViewModel
+    @Inject
+    lateinit var eventRepositoryImpl: EventRepository
+    lateinit var viewModelProviderFactory: EventViewModelProviderFactory
+
     private lateinit var eventAdapter: EventAdapter
     private lateinit var binding: ActivityEventsBinding
 
@@ -39,8 +43,7 @@ class EventsActivity : AppCompatActivity() {
         binding = ActivityEventsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val eventRepository = EventRepository(EventDatabase(context = this))
-        val viewModelProviderFactory = EventViewModelProviderFactory(application, eventRepository)
+        val viewModelProviderFactory = EventViewModelProviderFactory(application, eventRepositoryImpl)
         viewModel = ViewModelProvider(this, viewModelProviderFactory)[EventViewModel::class.java]
 
         setupRecyclerView()
