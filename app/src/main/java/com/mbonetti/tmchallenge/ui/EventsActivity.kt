@@ -17,12 +17,14 @@ import com.mbonetti.tmchallenge.ui.adapters.EventAdapter
 import com.mbonetti.tmchallenge.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.mbonetti.tmchallenge.util.Constants.Companion.SEARCH_DELAY
 import com.mbonetti.tmchallenge.util.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class EventsActivity : AppCompatActivity() {
 
     var isLoading = false
@@ -32,6 +34,7 @@ class EventsActivity : AppCompatActivity() {
     lateinit var viewModel: EventViewModel
     @Inject
     lateinit var eventRepositoryImpl: EventRepository
+    @Inject
     lateinit var viewModelProviderFactory: EventViewModelProviderFactory
 
     private lateinit var eventAdapter: EventAdapter
@@ -43,7 +46,6 @@ class EventsActivity : AppCompatActivity() {
         binding = ActivityEventsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModelProviderFactory = EventViewModelProviderFactory(application, eventRepositoryImpl)
         viewModel = ViewModelProvider(this, viewModelProviderFactory)[EventViewModel::class.java]
 
         setupRecyclerView()
