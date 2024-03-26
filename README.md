@@ -6,6 +6,7 @@ This app is capable of listing all events provided my Ticketmaster's Discovery A
 - Kotlin
 - MVVM
 - Room
+- Dependency Injection
 - Coroutines
 - Retrofit
 - Glide
@@ -23,11 +24,11 @@ This app is capable of listing all events provided my Ticketmaster's Discovery A
 ### How to run 
 1. Clone the project from this repository
 2. Open the project on your android studio
-3. Put your *API_KEY* value on app module's build.gradle
+3. Put your *API_KEY* value on app/build.gradle (not ideal, thinking about ease of build)
 4. Make sure your gradle and kotlin version are up-to-date and sync the project
 5. Run the project on an emulator or virtual device.
 
 ### Known issues
-- [x] The app does not paginate when it has search parameters set 
-- [ ] The app is not using Dependency Injection (will implement it after fixing pagination with search)
-- [ ] The app does not get saved events from database in case of network error yet (will implement it after fixing pagination with search)
+- [x] The app does not paginate when it has search parameters set [Fixed] 
+- [x] The app is not using Dependency Injection [Fixed]
+- [ ] The app does not get saved events from database in case of network error yet (working on it)
