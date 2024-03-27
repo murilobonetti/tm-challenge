@@ -2,6 +2,7 @@ package com.mbonetti.tmchallenge
 
 import androidx.lifecycle.LiveData
 import com.mbonetti.tmchallenge.api.EventsResponse
+import com.mbonetti.tmchallenge.api.RetrofitInstance
 import com.mbonetti.tmchallenge.db.EventDatabase
 import com.mbonetti.tmchallenge.db.models.Event
 import com.mbonetti.tmchallenge.repository.EventRepositoryImpl
@@ -21,7 +22,7 @@ class EventRepositoryImplTest {
     @Before
     fun setup() {
         eventDatabase = mockk()
-        eventRepositoryImpl = EventRepositoryImpl(eventDatabase)
+        eventRepositoryImpl = EventRepositoryImpl(eventDatabase, RetrofitInstance.api)
     }
 
     @Test
