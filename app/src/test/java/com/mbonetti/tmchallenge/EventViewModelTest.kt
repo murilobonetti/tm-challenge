@@ -5,7 +5,7 @@ import com.mbonetti.tmchallenge.db.models.Embedded
 import com.mbonetti.tmchallenge.db.models.Event
 import com.mbonetti.tmchallenge.db.models.EventImage
 import com.mbonetti.tmchallenge.db.models.Page
-import com.mbonetti.tmchallenge.repository.EventRepository
+import com.mbonetti.tmchallenge.repository.EventRepositoryImpl
 import com.mbonetti.tmchallenge.ui.EventViewModel
 import com.mbonetti.tmchallenge.util.Resource
 import io.mockk.clearAllMocks
@@ -26,7 +26,7 @@ import retrofit2.Response
 @ExperimentalCoroutinesApi
 class EventViewModelTest {
 
-    private lateinit var eventRepository: EventRepository
+    private lateinit var eventRepositoryImpl: EventRepositoryImpl
     private lateinit var viewModel: EventViewModel
     private val application: EventsApplication = mockk()
 
@@ -38,8 +38,8 @@ class EventViewModelTest {
 
     @Before
     fun setUp() {
-        eventRepository = mockk(relaxed = true)
-        viewModel = EventViewModel(application, eventRepository)
+        eventRepositoryImpl = mockk(relaxed = true)
+        viewModel = EventViewModel(application, eventRepositoryImpl)
     }
 
     @After
@@ -72,7 +72,7 @@ class EventViewModelTest {
         val page = Page(number = 0, size = 10, totalPages = 26000, totalElements = 259995)
         val eventsResponse = EventsResponse(embedded, page)
         val mockResponse = Response.success(eventsResponse)
-        coEvery { eventRepository.getEventsByKeyword(any(), any()) } returns mockResponse
+        coEvery { eventRepositoryImpl.getEventsByKeyword(any(), any()) } returns mockResponse
 
         viewModel.setSearchByCityChecked(false)
         viewModel.searchEventsByKeywordOrCity("Charlotte")
@@ -101,7 +101,7 @@ class EventViewModelTest {
         val page = Page(number = 0, size = 10, totalPages = 26000, totalElements = 259995)
         val eventsResponse = EventsResponse(embedded, page)
         val mockResponse = Response.success(eventsResponse)
-        coEvery { eventRepository.getEvents(any()) } returns mockResponse
+        coEvery { eventRepositoryImpl.getEvents(any()) } returns mockResponse
 
         viewModel.getEvents()
 

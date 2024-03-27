@@ -14,14 +14,18 @@ import com.mbonetti.tmchallenge.EventsApplication
 import com.mbonetti.tmchallenge.api.EventsResponse
 import com.mbonetti.tmchallenge.db.models.Event
 import com.mbonetti.tmchallenge.repository.EventRepository
+import com.mbonetti.tmchallenge.repository.EventRepositoryImpl
 import com.mbonetti.tmchallenge.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.Response
+import javax.inject.Inject
 
-class EventViewModel(
+@HiltViewModel
+class EventViewModel @Inject constructor(
     application: Application,
-    private val eventRepository: EventRepository
+    private val eventRepositoryImpl: EventRepository
 ) : AndroidViewModel(application) {
 
     val events: MutableLiveData<Resource<EventsResponse>> = MutableLiveData()
@@ -49,12 +53,12 @@ class EventViewModel(
     fun searchEventsByKeywordOrCity(searchQuery: String) = viewModelScope.launch {
         events.postValue(Resource.Loading())
         val response = if (isSearchByCityChecked.value == true) {
-            eventRepository.getEventsByCity(
+            eventRepositoryImpl.getEventsByCity(
                 city = searchQuery,
                 pageNumber = searchPage
             )
         } else {
-            eventRepository.getEventsByKeyword(
+            eventRepositoryImpl.getEventsByKeyword(
                 keyword = searchQuery,
                 pageNumber = searchPage
             )
@@ -106,16 +110,16 @@ class EventViewModel(
     }
 
     private fun saveEvents(events: List<Event>) = viewModelScope.launch {
-        eventRepository.insertOrUpdate(events)
+        eventRepositoryImpl.insertOrUpdate(events)
     }
 
-    fun getSavedEvents() = eventRepository.getSavedEvents()
+    fun getSavedEvents() = eventRepositoryImpl.getSavedEvents()
 
     private suspend fun safeGetEventsCall() {
         events.postValue(Resource.Loading())
         try {
             if (hasNetworkConnection()) {
-                val response = eventRepository.getEvents(pageNumber = eventsPage)
+                val response = eventRepositoryImpl.getEvents(pageNumber = eventsPage)
                 events.postValue(handleEventsResponse(response))
             } else {
                 events.postValue(Resource.Error("No internet connection!"))

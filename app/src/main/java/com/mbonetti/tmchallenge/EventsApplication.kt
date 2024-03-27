@@ -1,6 +1,7 @@
 package com.mbonetti.tmchallenge
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-open class EventsApplication : Application() {
-}
+@HiltAndroidApp
+open class EventsApplication : Application()

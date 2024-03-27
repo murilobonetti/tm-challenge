@@ -1,7 +1,7 @@
 package com.mbonetti.tmchallenge
 
 import android.app.Application
-import com.mbonetti.tmchallenge.repository.EventRepository
+import com.mbonetti.tmchallenge.repository.EventRepositoryImpl
 import com.mbonetti.tmchallenge.ui.EventViewModel
 import com.mbonetti.tmchallenge.ui.EventViewModelProviderFactory
 import io.mockk.mockk
@@ -17,9 +17,9 @@ class EventViewModelProviderFactoryTest {
     @Test
     fun testCreate() {
         val application = mockk<Application>()
-        val eventRepository = mockk<EventRepository>()
+        val eventRepositoryImpl = mockk<EventRepositoryImpl>()
 
-        val factory = EventViewModelProviderFactory(application, eventRepository)
+        val factory = EventViewModelProviderFactory(application, eventRepositoryImpl)
         val viewModel = factory.create(EventViewModel::class.java)
 
         assertEquals(EventViewModel::class.java, viewModel.javaClass)
